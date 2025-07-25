@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import TrialModal from "@/components/TrialModal";
 
 const Courses = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -325,9 +326,14 @@ const Courses = () => {
                       </span>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
-                        Try Free
-                      </Button>
+                      <TrialModal 
+                        courseTitle={course.title} 
+                        trialContent={course.trialContent}
+                      >
+                        <Button variant="outline" size="sm">
+                          Try Free
+                        </Button>
+                      </TrialModal>
                       <Button variant="hero" size="sm">
                         Enroll Now
                       </Button>
