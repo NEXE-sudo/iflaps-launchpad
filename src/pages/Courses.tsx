@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Filter, Clock, Users, Star, BookOpen } from "lucide-react";
+import { Search, Filter, Clock, Users, Star, BookOpen, Play, FileText, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -27,7 +27,12 @@ const Courses = () => {
       rating: 4.8,
       instructor: "Sarah Johnson",
       description: "Comprehensive IELTS preparation covering all four skills: Reading, Writing, Listening, and Speaking.",
-      features: ["Live Classes", "Mock Tests", "Personal Feedback", "Study Materials"]
+      features: ["Live Classes", "Mock Tests", "Personal Feedback", "Study Materials"],
+      trialContent: {
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        mockPapers: ["IELTS Reading Sample", "IELTS Writing Task 1 Sample", "IELTS Listening Practice"],
+        examples: ["Band 9 Writing Sample", "Speaking Test Example", "Reading Techniques Demo"]
+      }
     },
     {
       id: 2,
@@ -43,7 +48,12 @@ const Courses = () => {
       rating: 4.7,
       instructor: "Marie Dubois",
       description: "Build confidence in French conversation with practical scenarios and real-world applications.",
-      features: ["Video Lessons", "Practice Exercises", "Pronunciation Guide", "Cultural Insights"]
+      features: ["Video Lessons", "Practice Exercises", "Pronunciation Guide", "Cultural Insights"],
+      trialContent: {
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        mockPapers: ["French Conversation Starter", "DELF A2 Practice", "Business French Sample"],
+        examples: ["Daily Conversation Video", "Pronunciation Guide Sample", "Cultural Context Examples"]
+      }
     },
     {
       id: 3,
@@ -59,7 +69,12 @@ const Courses = () => {
       rating: 4.9,
       instructor: "Hans Mueller",
       description: "Intensive TestDaF preparation for university admission in Germany.",
-      features: ["Expert Guidance", "Test Strategies", "Writing Practice", "Speaking Sessions"]
+      features: ["Expert Guidance", "Test Strategies", "Writing Practice", "Speaking Sessions"],
+      trialContent: {
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        mockPapers: ["TestDaF Reading Sample", "TestDaF Writing Practice", "Listening Comprehension"],
+        examples: ["University Application Tips", "Academic Writing Sample", "Interview Preparation"]
+      }
     },
     {
       id: 4,
@@ -75,7 +90,12 @@ const Courses = () => {
       rating: 4.6,
       instructor: "Natasha Volkov",
       description: "Start your Russian language journey with structured lessons covering basics to intermediate level.",
-      features: ["Cyrillic Script", "Basic Grammar", "Vocabulary Building", "Audio Practice"]
+      features: ["Cyrillic Script", "Basic Grammar", "Vocabulary Building", "Audio Practice"],
+      trialContent: {
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        mockPapers: ["Cyrillic Writing Practice", "Basic Grammar Test", "Vocabulary Quiz"],
+        examples: ["Russian Alphabet Tutorial", "Basic Phrases Guide", "Pronunciation Examples"]
+      }
     },
     {
       id: 5,
@@ -91,7 +111,12 @@ const Courses = () => {
       rating: 4.8,
       instructor: "Michael Brown",
       description: "Focused TOEFL speaking preparation with proven techniques and practice sessions.",
-      features: ["Speaking Practice", "Feedback Sessions", "Exam Strategies", "Confidence Building"]
+      features: ["Speaking Practice", "Feedback Sessions", "Exam Strategies", "Confidence Building"],
+      trialContent: {
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        mockPapers: ["TOEFL Speaking Task 1", "Independent Speaking Sample", "Integrated Speaking Practice"],
+        examples: ["High-Score Speaking Sample", "Common Mistakes Guide", "Time Management Tips"]
+      }
     },
     {
       id: 6,
@@ -107,7 +132,12 @@ const Courses = () => {
       rating: 4.7,
       instructor: "Pierre Laurent",
       description: "Achieve DELF B2 certification with comprehensive preparation and expert guidance.",
-      features: ["Exam Simulation", "Oral Practice", "Written Expression", "Comprehension Skills"]
+      features: ["Exam Simulation", "Oral Practice", "Written Expression", "Comprehension Skills"],
+      trialContent: {
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        mockPapers: ["DELF B2 Production Écrite", "Compréhension Orale Sample", "Production Orale Guide"],
+        examples: ["B2 Level Writing Sample", "Oral Presentation Example", "Listening Strategy Demo"]
+      }
     }
   ];
 
@@ -264,6 +294,29 @@ const Courses = () => {
                   )}
                 </div>
 
+                {/* Trial Content Preview */}
+                <div className="space-y-3 pt-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-medium text-foreground">Free Trial Content:</h4>
+                    <Eye className="w-4 h-4 text-muted-foreground" />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 gap-2 text-xs">
+                    <div className="flex items-center space-x-2 p-2 bg-muted/50 rounded-md">
+                      <Play className="w-3 h-3 text-primary" />
+                      <span className="text-muted-foreground">Sample Video Lesson</span>
+                    </div>
+                    <div className="flex items-center space-x-2 p-2 bg-muted/50 rounded-md">
+                      <FileText className="w-3 h-3 text-primary" />
+                      <span className="text-muted-foreground">{course.trialContent.mockPapers.length} Mock Papers</span>
+                    </div>
+                    <div className="flex items-center space-x-2 p-2 bg-muted/50 rounded-md">
+                      <BookOpen className="w-3 h-3 text-primary" />
+                      <span className="text-muted-foreground">{course.trialContent.examples.length} Study Examples</span>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="pt-4 border-t border-border">
                   <div className="flex items-center justify-between">
                     <div>
@@ -271,9 +324,14 @@ const Courses = () => {
                         ₹{course.price.toLocaleString()}
                       </span>
                     </div>
-                    <Button variant="hero" size="sm">
-                      View Details
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm">
+                        Try Free
+                      </Button>
+                      <Button variant="hero" size="sm">
+                        Enroll Now
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </CardContent>
