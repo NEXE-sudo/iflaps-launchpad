@@ -66,13 +66,10 @@ const Navbar = () => {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger 
-                    className={`text-sm font-medium transition-colors hover:text-primary ${
-                      location.pathname.startsWith("/rendezvous") ? "text-primary" : "text-foreground"
-                    }`}
-                    asChild
-                  >
-                    <Link to="/rendezvous">Rendezvous</Link>
+                  <NavigationMenuTrigger className={`text-sm font-medium transition-colors hover:text-primary ${
+                    location.pathname.startsWith("/rendezvous") ? "text-primary" : "text-foreground"
+                  }`}>
+                    <Link to="/rendezvous" className="hover:no-underline">Rendezvous</Link>
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="p-4 w-64">
