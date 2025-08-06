@@ -1,7 +1,26 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Globe, BookOpen } from "lucide-react";
+import { Menu, X, Globe, BookOpen, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+
+const clubs = [
+  { name: "Research Club", route: "/rendezvous/research" },
+  { name: "Technology Club", route: "/rendezvous/tech" },
+  { name: "Hindi Club", route: "/rendezvous/hindi" },
+  { name: "Theatre Club", route: "/rendezvous/theatre" },
+  { name: "Debate Club", route: "/rendezvous/debate" },
+  { name: "Financial Literacy Club", route: "/rendezvous/financial" },
+  { name: "Art & Craft Club", route: "/rendezvous/art" },
+  { name: "Community Service Department", route: "/rendezvous/community" }
+];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,6 +61,39 @@ const Navbar = () => {
             >
               Courses
             </Link>
+            
+            {/* Rendezvous Dropdown */}
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger 
+                    className={`text-sm font-medium transition-colors hover:text-primary ${
+                      location.pathname.startsWith("/rendezvous") ? "text-primary" : "text-foreground"
+                    }`}
+                    asChild
+                  >
+                    <Link to="/rendezvous">Rendezvous</Link>
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="p-4 w-64">
+                      <div className="grid gap-2">
+                        {clubs.map((club) => (
+                          <NavigationMenuLink key={club.name} asChild>
+                            <Link
+                              to={club.route}
+                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                            >
+                              <div className="text-sm font-medium leading-none">{club.name}</div>
+                            </Link>
+                          </NavigationMenuLink>
+                        ))}
+                      </div>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
             <Link
               to="/about"
               className={`text-sm font-medium transition-colors hover:text-primary ${
@@ -106,6 +158,17 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Courses
+              </Link>
+              <Link
+                to="/rendezvous"
+                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  location.pathname.startsWith("/rendezvous")
+                    ? "bg-primary text-primary-foreground"
+                    : "text-foreground hover:text-primary hover:bg-accent"
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                Rendezvous
               </Link>
               <Link
                 to="/about"
