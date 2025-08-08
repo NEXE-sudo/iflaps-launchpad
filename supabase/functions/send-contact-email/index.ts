@@ -1,13 +1,15 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+import dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
+import express, { Request, Response } from "express";
+import cors from "cors";
+import { Resend } from "resend";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
-};
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface ContactEmailRequest {
   name: string;
@@ -16,14 +18,13 @@ interface ContactEmailRequest {
   message: string;
 }
 
-const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
-  }
+app.options("/", (req, res) => {
+  res.sendStatus(204);
+});
 
+app.post("/", async (req: Request, res: Response) => {
   try {
-    const { name, email, subject, message }: ContactEmailRequest = await req.json();
+    const { name, email, subject, message }: ContactEmailRequest = req.body;
 
     console.log("Processing contact form submission:", { name, email, subject });
 
@@ -91,7 +92,7 @@ const handler = async (req: Request): Promise<Response> => {
           </p>
           
           <div style="text-align: center; margin: 30px 0;">
-            <a href="${Deno.env.get('SUPABASE_URL') || 'https://your-site.com'}" 
+            <a href="${process.env.SUPABASE_URL || 'https://your-site.com'}" 
                style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
               Visit Our Website
             </a>
@@ -111,34 +112,25 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("User confirmation email sent successfully:", userEmailResponse);
 
-    return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: "Emails sent successfully",
-        ownerEmailId: ownerEmailResponse.data?.id,
-        userEmailId: userEmailResponse.data?.id
-      }), 
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          ...corsHeaders,
-        },
-      }
-    );
+    res.status(200).json({
+      success: true,
+      message: "Emails sent successfully",
+      ownerEmailId: ownerEmailResponse.data?.id,
+      userEmailId: userEmailResponse.data?.id
+    });
   } catch (error: any) {
     console.error("Error in send-contact-email function:", error);
-    return new Response(
-      JSON.stringify({ 
-        error: error.message,
-        success: false
-      }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
-    );
+    res.status(500).json({
+      error: error.message,
+      success: false
+    });
   }
-};
+});
 
-serve(handler);
+// If running standalone, start the server
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
+}
