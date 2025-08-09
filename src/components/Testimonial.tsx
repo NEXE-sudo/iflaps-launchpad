@@ -20,7 +20,7 @@ export default function Testimonials() {
                     <Card className="grid grid-rows-[auto_1fr] gap-8 sm:col-span-2 sm:p-6 lg:row-span-2">
                         <CardHeader>
                             <img
-                                className="h-12 w-fit"
+                                className="h-18 w-fit"
                                 src="/logos/cambridge.svg"
                                 alt="Cambridge Logo"
                                 height="24"
