@@ -236,10 +236,32 @@ const Courses = () => {
                     </p>
                     <button
                       onClick={() => {
-                        const info = testInfoData[course.title] || {
-                          title: `About ${course.title}`,
-                          description: course.description,
-                        };
+                        let testType;
+                        // Map course titles to test types
+                        if (course.title.includes("IELTS")) testType = "IELTS";
+                        else if (course.title.includes("TOEFL"))
+                          testType = "TOEFL";
+                        else if (
+                          course.title.includes("Duolingo") ||
+                          course.title.includes("DET")
+                        )
+                          testType = "DET";
+                        else if (course.title.includes("DELF"))
+                          testType = "DELF";
+                        else if (course.title.includes("Business"))
+                          testType = "Business English";
+                        else if (course.title.includes("French"))
+                          testType = "General French";
+                        else if (course.title.includes("English"))
+                          testType = "General English";
+
+                        const info = testType
+                          ? testInfoData[testType]
+                          : {
+                              title: `About ${course.title}`,
+                              description:
+                                "This test evaluates your language proficiency according to international standards. Contact us for more specific information about this test.",
+                            };
                         setSelectedTestInfo(info);
                       }}
                       className="text-primary text-sm hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
