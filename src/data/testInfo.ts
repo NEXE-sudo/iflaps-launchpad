@@ -1,7 +1,7 @@
 interface TestInfo {
   title: string;
   description: string;
-  format?: string;
+  format: string;
   sections?: string;
   duration?: string;
   score?: string;
