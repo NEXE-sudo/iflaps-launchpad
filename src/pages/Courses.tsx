@@ -1,14 +1,30 @@
-
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { Search, Filter, Clock, Users, Star, BookOpen, Play, FileText, Eye } from "lucide-react";
+import {
+  Search,
+  Filter,
+  Clock,
+  Users,
+  Star,
+  BookOpen,
+  Play,
+  FileText,
+  Eye,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import TrialModal from "@/components/TrialModal";
-
+import TestInfoModal from "@/components/TestInfoModal";
+import { testInfoData } from "@/data/testInfo";
 
 const Courses = () => {
   // Supabase setup
@@ -23,17 +39,21 @@ const Courses = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [selectedFormat, setSelectedFormat] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
+  const [selectedTestInfo, setSelectedTestInfo] = useState<{
+    title: string;
+    description: string;
+  } | null>(null);
 
   useEffect(() => {
     const fetchCourses = async () => {
       setLoading(true);
       const { data, error } = await supabase
-        .from('courses')
-        .select('*')
-        .order('created_at', { ascending: false });
-      console.log('Fetched courses (no filter):', data);
+        .from("courses")
+        .select("*")
+        .order("created_at", { ascending: false });
+      console.log("Fetched courses (no filter):", data);
       if (error) {
-        console.error('Supabase error:', error);
+        console.error("Supabase error:", error);
         setError(error.message);
         setCourses([]);
       } else {
@@ -45,12 +65,19 @@ const Courses = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const filteredCourses = courses.filter(course => {
-    const matchesSearch = (course.title || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (course.language || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (course.instructor || "").toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesLanguage = selectedLanguage === "all" || course.language === selectedLanguage;
-    const matchesFormat = selectedFormat === "all" || course.format === selectedFormat;
+  const filteredCourses = courses.filter((course) => {
+    const matchesSearch =
+      (course.title || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (course.language || "")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      (course.instructor || "")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+    const matchesLanguage =
+      selectedLanguage === "all" || course.language === selectedLanguage;
+    const matchesFormat =
+      selectedFormat === "all" || course.format === selectedFormat;
     const matchesType = selectedType === "all" || course.type === selectedType;
     return matchesSearch && matchesLanguage && matchesFormat && matchesType;
   });
@@ -64,7 +91,8 @@ const Courses = () => {
             Our Courses
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Choose from our comprehensive range of language courses designed to help you achieve your goals.
+            Choose from our comprehensive range of language courses designed to
+            help you achieve your goals.
           </p>
         </section>
 
@@ -84,7 +112,10 @@ const Courses = () => {
                     />
                   </div>
                 </div>
-                <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                <Select
+                  value={selectedLanguage}
+                  onValueChange={setSelectedLanguage}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Language" />
                   </SelectTrigger>
@@ -96,7 +127,10 @@ const Courses = () => {
                     <SelectItem value="Russian">Russian</SelectItem>
                   </SelectContent>
                 </Select>
-                <Select value={selectedFormat} onValueChange={setSelectedFormat}>
+                <Select
+                  value={selectedFormat}
+                  onValueChange={setSelectedFormat}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Format" />
                   </SelectTrigger>
@@ -159,18 +193,35 @@ const Courses = () => {
             {filteredCourses.map((course, index) => {
               // Parse features and trialContent if needed
               let features = course.features;
-              if (typeof features === 'string') {
-                try { features = JSON.parse(features); } catch { features = []; }
+              if (typeof features === "string") {
+                try {
+                  features = JSON.parse(features);
+                } catch {
+                  features = [];
+                }
               }
               let trialContent = course.trial_content;
-              if (typeof trialContent === 'string') {
-                try { trialContent = JSON.parse(trialContent); } catch { trialContent = {}; }
+              if (typeof trialContent === "string") {
+                try {
+                  trialContent = JSON.parse(trialContent);
+                } catch {
+                  trialContent = {};
+                }
               }
               return (
-                <Card key={course.id} className="group hover:shadow-card transition-all duration-300 bg-gradient-card border-0 animate-fade-in overflow-hidden" style={{ animationDelay: `${index * 0.1}s` }}>
+                <Card
+                  key={course.id}
+                  className="group hover:shadow-card transition-all duration-300 bg-gradient-card border-0 animate-fade-in overflow-hidden"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
                   <CardHeader className="pb-4">
                     <div className="flex justify-between items-start mb-2">
-                      <Badge variant={course.format === "Live" ? "default" : "secondary"} className="mb-2">
+                      <Badge
+                        variant={
+                          course.format === "Live" ? "default" : "secondary"
+                        }
+                        className="mb-2"
+                      >
                         {course.format === "Live" ? "🔴 LIVE" : "📚 SELF-PACED"}
                       </Badge>
                       <Badge variant="outline" className="text-xs">
@@ -180,42 +231,70 @@ const Courses = () => {
                     <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors">
                       {course.title}
                     </CardTitle>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-sm mb-2">
                       {course.description}
                     </p>
+                    <button
+                      onClick={() => {
+                        const info = testInfoData[course.title] || {
+                          title: `About ${course.title}`,
+                          description: course.description,
+                        };
+                        setSelectedTestInfo(info);
+                      }}
+                      className="text-primary text-sm hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
+                    >
+                      Know about this test →
+                    </button>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center space-x-2">
                         <BookOpen className="w-4 h-4 text-primary" />
-                        <span className="text-muted-foreground">{course.language}</span>
+                        <span className="text-muted-foreground">
+                          {course.language}
+                        </span>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Clock className="w-4 h-4 text-primary" />
-                        <span className="text-muted-foreground">{course.duration_weeks ? `${course.duration_weeks} weeks` : ''}</span>
+                        <span className="text-muted-foreground">
+                          {course.duration_weeks
+                            ? `${course.duration_weeks} weeks`
+                            : ""}
+                        </span>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Star className="w-4 h-4 text-accent fill-current" />
-                        <span className="text-muted-foreground">{course.rating || '-'}</span>
+                        <span className="text-muted-foreground">
+                          {course.rating || "-"}
+                        </span>
                       </div>
                     </div>
                     <div className="space-y-2">
                       <p className="text-sm text-muted-foreground">
-                        <span className="font-medium">Level:</span> {course.level}
+                        <span className="font-medium">Level:</span>{" "}
+                        {course.level}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        <span className="font-medium">Instructor:</span> {course.instructor}
+                        <span className="font-medium">Instructor:</span>{" "}
+                        {course.instructor}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        <span className="font-medium">Lessons:</span> {course.lessons}
+                        <span className="font-medium">Lessons:</span>{" "}
+                        {course.lessons}
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-1 mt-3">
-                      {Array.isArray(features) && features.slice(0, 3).map((feature, idx) => (
-                        <Badge key={idx} variant="secondary" className="text-xs">
-                          {feature}
-                        </Badge>
-                      ))}
+                      {Array.isArray(features) &&
+                        features.slice(0, 3).map((feature, idx) => (
+                          <Badge
+                            key={idx}
+                            variant="secondary"
+                            className="text-xs"
+                          >
+                            {feature}
+                          </Badge>
+                        ))}
                       {Array.isArray(features) && features.length > 3 && (
                         <Badge variant="secondary" className="text-xs">
                           +{features.length - 3} more
@@ -225,21 +304,29 @@ const Courses = () => {
                     {/* Trial Content Preview */}
                     <div className="space-y-3 pt-2">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-sm font-medium text-foreground">Free Trial Content:</h4>
+                        <h4 className="text-sm font-medium text-foreground">
+                          Free Trial Content:
+                        </h4>
                         <Eye className="w-4 h-4 text-muted-foreground" />
                       </div>
                       <div className="grid grid-cols-1 gap-2 text-xs">
                         <div className="flex items-center space-x-2 p-2 bg-muted/50 rounded-md">
                           <Play className="w-3 h-3 text-primary" />
-                          <span className="text-muted-foreground">Sample Video Lesson</span>
+                          <span className="text-muted-foreground">
+                            Sample Video Lesson
+                          </span>
                         </div>
                         <div className="flex items-center space-x-2 p-2 bg-muted/50 rounded-md">
                           <FileText className="w-3 h-3 text-primary" />
-                          <span className="text-muted-foreground">{trialContent?.mockPapers?.length || 0} Mock Papers</span>
+                          <span className="text-muted-foreground">
+                            {trialContent?.mockPapers?.length || 0} Mock Papers
+                          </span>
                         </div>
                         <div className="flex items-center space-x-2 p-2 bg-muted/50 rounded-md">
                           <BookOpen className="w-3 h-3 text-primary" />
-                          <span className="text-muted-foreground">{trialContent?.examples?.length || 0} Study Examples</span>
+                          <span className="text-muted-foreground">
+                            {trialContent?.examples?.length || 0} Study Examples
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -251,8 +338,8 @@ const Courses = () => {
                           </span>
                         </div>
                         <div className="flex gap-2">
-                          <TrialModal 
-                            courseTitle={course.title} 
+                          <TrialModal
+                            courseTitle={course.title}
                             trialContent={trialContent}
                           >
                             <Button variant="outline" size="sm">
@@ -282,10 +369,11 @@ const Courses = () => {
               No courses found
             </h3>
             <p className="text-muted-foreground mb-6">
-              Try adjusting your search criteria or browse all available courses.
+              Try adjusting your search criteria or browse all available
+              courses.
             </p>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => {
                 setSearchTerm("");
                 setSelectedLanguage("all");
@@ -297,6 +385,14 @@ const Courses = () => {
             </Button>
           </div>
         )}
+
+        {/* Test Info Modal */}
+        <TestInfoModal
+          isOpen={!!selectedTestInfo}
+          onClose={() => setSelectedTestInfo(null)}
+          title={selectedTestInfo?.title || ""}
+          description={selectedTestInfo?.description || ""}
+        />
       </div>
     </div>
   );
