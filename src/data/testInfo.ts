@@ -20,7 +20,7 @@ export const testInfoData: Record<string, TestInfo> = {
     duration: "2 hours 45 minutes total",
     score: "Band scores from 1-9",
     validity: "Valid for 2 years",
-    recognition: "Accepted by over 11,000 organizations worldwide",
+    recognition: "Accepted by over 11,000 organisations worldwide",
     features: [
       "Computer or paper-based testing",
       "Results within 13 days",
@@ -60,23 +60,71 @@ export const testInfoData: Record<string, TestInfo> = {
     ],
   },
   DELF: {
-    title: "About DELF (Diplôme d'études en langue française)",
+    title: "DELF (Diplôme d'études en langue française)",
     description:
-      "DELF is an official certification of French language proficiency for non-native speakers. The exam evaluates your ability to use French in real-life situations and is recognized worldwide. It's administered by the French Ministry of Education.",
+      "An official certification of French language proficiency for non-native speakers, recognised worldwide.",
+    format: "Paper-based exam",
+    sections: "Listening, Reading, Writing, and Speaking",
+    duration: "1.5 to 2.5 hours depending on the level",
+    score: "Out of 100 points (minimum 50 to pass)",
+    validity: "Lifetime validity",
+    recognition:
+      "Recognised by the French Ministry of Education and organisations worldwide",
+    features: [
+      "Separate exams for A1, A2, B1, and B2 levels",
+      "International recognition",
+      "No expiration date",
+    ],
   },
   "General English": {
-    title: "About Cambridge English Exams",
+    title: "Cambridge English Qualifications",
     description:
-      "Cambridge English Qualifications are in-depth exams that make learning English enjoyable, effective and rewarding. The exams include B2 First (FCE), C1 Advanced (CAE), and C2 Proficiency (CPE), each testing your English skills at different levels of the Common European Framework of Reference (CEFR).",
+      "In-depth exams that make learning English enjoyable, effective and rewarding.",
+    format: "Paper-based or computer-based depending on exam level",
+    sections: "Reading & Use of English, Writing, Listening, and Speaking",
+    duration: "Varies from 2 to 4 hours depending on level",
+    score: "Scaled score based on the CEFR level",
+    validity: "Lifetime validity",
+    recognition:
+      "Accepted by thousands of universities, employers, and governments worldwide",
+    features: [
+      "B2 First, C1 Advanced, and C2 Proficiency levels",
+      "Speaking test with two candidates",
+      "Detailed feedback on skills",
+    ],
   },
   "General French": {
-    title: "About TCF (Test de Connaissance du Français)",
+    title: "TCF (Test de Connaissance du Français)",
     description:
-      "The TCF is a French language test administered by France Education International. It evaluates your French language skills for academic, professional, or immigration purposes. The test assesses listening comprehension, reading comprehension, and writing skills through a series of multiple-choice questions and writing tasks.",
+      "Evaluates your French language skills for academic, professional, or immigration purposes.",
+    format: "Computer-based or paper-based",
+    sections: "Listening, Reading, and Writing (with optional Speaking)",
+    duration: "1.5 to 2 hours depending on modules",
+    score: "Level-based scoring from A1 to C2",
+    validity: "Valid for 2 years",
+    recognition:
+      "Recognised by French universities, employers, and immigration authorities",
+    features: [
+      "Flexible modular structure",
+      "International recognition",
+      "Accepted for French citizenship applications",
+    ],
   },
   "Business English": {
-    title: "About Cambridge Business English Certificates (BEC)",
+    title: "Cambridge Business English Certificates (BEC)",
     description:
-      "The Business English Certificates (BEC) from Cambridge Assessment English specifically test your English in a business context. Available at three levels: BEC Preliminary, BEC Vantage, and BEC Higher, these tests assess your ability to use English confidently in international business environments.",
+      "Tests your English in a business context, available at three levels: Preliminary, Vantage, and Higher.",
+    format: "Paper-based or computer-based",
+    sections: "Reading, Writing, Listening, and Speaking",
+    duration: "About 2 to 3 hours depending on level",
+    score: "Scaled score aligned to CEFR levels",
+    validity: "Lifetime validity",
+    recognition:
+      "Accepted by companies, governments, and educational institutions worldwide",
+    features: [
+      "Focus on workplace communication",
+      "Realistic business scenarios",
+      "Speaking test with two candidates",
+    ],
   },
 };
