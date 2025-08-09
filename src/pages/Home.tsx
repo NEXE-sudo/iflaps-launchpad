@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import heroImage from "@/assets/hero-education.jpg";
+import Testimonials from "@/components/Testimonial";
 
 const Home = () => {
   const languages = [
@@ -134,6 +135,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <Testimonials />
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-hero text-white relative overflow-hidden">
