@@ -255,13 +255,11 @@ const Courses = () => {
                         else if (course.title.includes("English"))
                           testType = "General English";
 
-                        const info = testType
-                          ? testInfoData[testType]
-                          : {
-                              title: `About ${course.title}`,
-                              description:
-                                "This test evaluates your language proficiency according to international standards. Contact us for more specific information about this test.",
-                            };
+                        const info = testInfoData[testType] || {
+                          title: `About ${course.title}`,
+                          description:
+                            "This test evaluates your language proficiency according to international standards. Contact us for more specific information about this test.",
+                        };
                         setSelectedTestInfo(info);
                       }}
                       className="text-primary text-sm hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
