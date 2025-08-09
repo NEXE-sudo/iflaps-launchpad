@@ -38,13 +38,6 @@ export default function TestInfoModal({
         <div className="space-y-4 mt-4">
           <p className="text-muted-foreground">{testInfo.description}</p>
 
-          {testInfo.format && (
-            <div className="space-y-1">
-              <h4 className="font-semibold">Format</h4>
-              <p className="text-sm text-muted-foreground">{testInfo.format}</p>
-            </div>
-          )}
-
           {testInfo.sections && (
             <div className="space-y-1">
               <h4 className="font-semibold">Test Sections</h4>
