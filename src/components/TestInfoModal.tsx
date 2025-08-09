@@ -3,31 +3,102 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose,
 } from "@/components/ui/dialog";
-import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
-interface TestInfoModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface TestInfo {
   title: string;
   description: string;
+  format?: string;
+  sections?: string;
+  duration?: string;
+  score?: string;
+  validity?: string;
+  recognition?: string;
+  features?: string[];
+}
+
+interface TestInfoModalProps extends TestInfo {
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export default function TestInfoModal({
   isOpen,
   onClose,
-  title,
-  description,
+  ...testInfo
 }: TestInfoModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle className="text-xl font-bold">
+            {testInfo.title}
+          </DialogTitle>
         </DialogHeader>
-        <div className="text-muted-foreground">{description}</div>
+        <div className="space-y-4 mt-4">
+          <p className="text-muted-foreground">{testInfo.description}</p>
+
+          {testInfo.format && (
+            <div className="space-y-1">
+              <h4 className="font-semibold">Format</h4>
+              <p className="text-sm text-muted-foreground">{testInfo.format}</p>
+            </div>
+          )}
+
+          {testInfo.sections && (
+            <div className="space-y-1">
+              <h4 className="font-semibold">Test Sections</h4>
+              <p className="text-sm text-muted-foreground">
+                {testInfo.sections}
+              </p>
+            </div>
+          )}
+
+          {testInfo.duration && (
+            <div className="space-y-1">
+              <h4 className="font-semibold">Duration</h4>
+              <p className="text-sm text-muted-foreground">
+                {testInfo.duration}
+              </p>
+            </div>
+          )}
+
+          {testInfo.score && (
+            <div className="space-y-1">
+              <h4 className="font-semibold">Scoring</h4>
+              <p className="text-sm text-muted-foreground">{testInfo.score}</p>
+            </div>
+          )}
+
+          {testInfo.validity && (
+            <div className="space-y-1">
+              <h4 className="font-semibold">Score Validity</h4>
+              <p className="text-sm text-muted-foreground">
+                {testInfo.validity}
+              </p>
+            </div>
+          )}
+
+          {testInfo.recognition && (
+            <div className="space-y-1">
+              <h4 className="font-semibold">Recognition</h4>
+              <p className="text-sm text-muted-foreground">
+                {testInfo.recognition}
+              </p>
+            </div>
+          )}
+
+          {testInfo.features && testInfo.features.length > 0 && (
+            <div className="space-y-2">
+              <h4 className="font-semibold">Key Features</h4>
+              <ul className="list-disc list-inside text-sm text-muted-foreground">
+                {testInfo.features.map((feature, index) => (
+                  <li key={index}>{feature}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   );

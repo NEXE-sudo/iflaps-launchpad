@@ -1,23 +1,63 @@
 interface TestInfo {
   title: string;
   description: string;
+  format?: string;
+  sections?: string;
+  duration?: string;
+  score?: string;
+  validity?: string;
+  recognition?: string;
+  features?: string[];
 }
 
 export const testInfoData: Record<string, TestInfo> = {
   IELTS: {
-    title: "About IELTS (International English Language Testing System)",
+    title: "IELTS (International English Language Testing System)",
     description:
-      "IELTS is the world's most popular English language test for higher education and global migration. It assesses all of your English skills — reading, writing, listening and speaking. The test is designed to reflect how you will use English at study, at work, and in your new life abroad.",
+      "The world's most popular English language test for higher education and global migration.",
+    format: "Available in Academic and General Training versions",
+    sections: "Reading, Writing, Listening, and Speaking",
+    duration: "2 hours 45 minutes total",
+    score: "Band scores from 1-9",
+    validity: "Valid for 2 years",
+    recognition: "Accepted by over 11,000 organizations worldwide",
+    features: [
+      "Computer or paper-based testing",
+      "Results within 13 days",
+      "Speaking test with certified examiner",
+    ],
   },
   TOEFL: {
-    title: "About TOEFL (Test of English as a Foreign Language)",
+    title: "TOEFL (Test of English as a Foreign Language)",
     description:
-      "TOEFL is a standardized test to measure the English language ability of non-native speakers wishing to enroll in English-speaking universities. The test is accepted by more than 11,000 universities and other institutions in over 190 countries and territories.",
+      "Measures your ability to use and understand English at the university level.",
+    format: "Internet-based test (iBT)",
+    sections: "Reading, Writing, Listening, and Speaking",
+    duration: "About 3 hours",
+    score: "0-120 points total",
+    validity: "Valid for 2 years",
+    recognition: "Accepted by more than 11,500 institutions in 160 countries",
+    features: [
+      "100% computer-based",
+      "Home Edition available",
+      "Instant score preview",
+    ],
   },
   DET: {
-    title: "About Duolingo English Test",
+    title: "Duolingo English Test",
     description:
-      "The Duolingo English Test is an online English proficiency test that can be taken from your computer. The test is adaptive, which means that the questions become harder or easier depending on your answers, and provides fast results. It's accepted by thousands of institutions worldwide.",
+      "A modern, convenient English proficiency test that can be taken online anytime.",
+    format: "Computer-adaptive test",
+    sections: "Literacy, Comprehension, Conversation, and Production",
+    duration: "1 hour",
+    score: "10-160 points",
+    validity: "Valid for 2 years",
+    recognition: "Accepted by over 3,000 institutions",
+    features: [
+      "AI-proctored",
+      "Results within 48 hours",
+      "Take from home anytime",
+    ],
   },
   DELF: {
     title: "About DELF (Diplôme d'études en langue française)",
