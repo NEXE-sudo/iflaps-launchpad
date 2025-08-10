@@ -26,6 +26,17 @@ import TrialModal from "@/components/TrialModal";
 import TestInfoModal from "@/components/TestInfoModal";
 import { testInfoData } from "@/data/testInfo";
 
+interface TestInfo {
+  title: string;
+  description: string;
+  sections: string;
+  duration: string;
+  score: string;
+  validity: string;
+  recognition: string;
+  features: string[];
+}
+
 const Courses = () => {
   // Supabase setup
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -39,10 +50,9 @@ const Courses = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [selectedFormat, setSelectedFormat] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
-  const [selectedTestInfo, setSelectedTestInfo] = useState<{
-    title: string;
-    description: string;
-  } | null>(null);
+  const [selectedTestInfo, setSelectedTestInfo] = useState<TestInfo | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -259,6 +269,15 @@ const Courses = () => {
                           title: `About ${course.title}`,
                           description:
                             "This test evaluates your language proficiency according to international standards. Contact us for more specific information about this test.",
+                          sections: "Various sections based on language skills",
+                          duration: "Varies by test level",
+                          score: "Proficiency-based scoring",
+                          validity: "Check with test provider",
+                          recognition: "Internationally recognized",
+                          features: [
+                            "Professional assessment",
+                            "Standardized testing",
+                          ],
                         };
                         setSelectedTestInfo(info);
                       }}
@@ -412,6 +431,12 @@ const Courses = () => {
           onClose={() => setSelectedTestInfo(null)}
           title={selectedTestInfo?.title || ""}
           description={selectedTestInfo?.description || ""}
+          sections={selectedTestInfo?.sections || ""}
+          duration={selectedTestInfo?.duration || ""}
+          score={selectedTestInfo?.score || ""}
+          validity={selectedTestInfo?.validity || ""}
+          recognition={selectedTestInfo?.recognition || ""}
+          features={selectedTestInfo?.features || []}
         />
       </div>
     </div>

@@ -8,7 +8,7 @@ import {
 interface TestInfo {
   title: string;
   description: string;
-  format?: string;
+  format?: string; // Made optional since it's not in your testInfoData
   sections?: string;
   duration?: string;
   score?: string;
@@ -37,6 +37,13 @@ export default function TestInfoModal({
         </DialogHeader>
         <div className="space-y-4 mt-4">
           <p className="text-muted-foreground">{testInfo.description}</p>
+
+          {testInfo.format && (
+            <div className="space-y-1">
+              <h4 className="font-semibold">Test Format</h4>
+              <p className="text-sm text-muted-foreground">{testInfo.format}</p>
+            </div>
+          )}
 
           {testInfo.sections && (
             <div className="space-y-1">
