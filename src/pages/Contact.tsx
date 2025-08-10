@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import FAQsTwo from "@/components/FAQs";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -242,17 +243,7 @@ const Contact = () => {
         </div>
 
         {/* FAQ Section */}
-        <section className="mt-20 text-center animate-fade-in">
-          <h2 className="text-3xl font-bold text-foreground mb-6">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-muted-foreground mb-8">
-            Can't find what you're looking for? Check out our FAQ section or contact us directly.
-          </p>
-          <Button variant="outline" size="lg">
-            View FAQ
-          </Button>
-        </section>
+        <FAQsTwo />
       </div>
     </div>
   );
